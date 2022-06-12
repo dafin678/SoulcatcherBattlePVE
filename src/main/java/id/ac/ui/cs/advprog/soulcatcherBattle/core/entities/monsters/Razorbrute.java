@@ -16,4 +16,9 @@ public class Razorbrute extends MonsterAttacks {
     protected String getName() {
         return name;
     }
+
+    @Override
+    protected int getId() {
+        return 0;
+    }
 }

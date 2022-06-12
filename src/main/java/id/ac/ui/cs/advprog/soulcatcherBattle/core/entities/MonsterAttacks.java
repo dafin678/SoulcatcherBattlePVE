@@ -12,7 +12,8 @@ public abstract class MonsterAttacks {
 
     protected abstract Integer attackDamage();
 
-
     protected abstract String getName();
+
+    protected abstract int getId();
 }
 

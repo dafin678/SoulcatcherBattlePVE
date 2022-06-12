@@ -11,19 +11,24 @@ public class Monster extends Entity {
     @JsonIgnore
     MonsterAttacks monsterAttacks;
 
-    String id;
 
-    public Monster(MonsterAttacks monsterAttacks, String id) {
+    public Monster(MonsterAttacks monsterAttacks) {
         this.monsterAttacks = monsterAttacks;
         this.health = monsterAttacks.health();
         this.state = EntityState.ALIVE;
-        this.id = id;
+
     }
 
 
     public String getName() {
         return monsterAttacks.getName();
     }
+
+    @Override
+    public int getId() {
+        return monsterAttacks.getId();
+    }
+
 
     @Override
     public int getAttack() {

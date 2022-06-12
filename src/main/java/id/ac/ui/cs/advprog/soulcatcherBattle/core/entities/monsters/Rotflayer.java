@@ -11,10 +11,13 @@ public class Rotflayer extends MonsterAttacks {
     }
 
 
-
-
     @Override
     protected String getName() {
         return name;
+    }
+
+    @Override
+    protected int getId() {
+        return 1;
     }
 }

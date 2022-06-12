@@ -10,10 +10,7 @@ public abstract class Entity {
 
     public abstract int getAttack();
 
-    public abstract int getDefense();
+    public abstract int getHP();
 
-    public void refreshState() {
-        this.health = Math.max(health, 0);
-        if (health <= 0) state = EntityState.DEAD;
-    }
+    public abstract void setHP(int hp);
 }

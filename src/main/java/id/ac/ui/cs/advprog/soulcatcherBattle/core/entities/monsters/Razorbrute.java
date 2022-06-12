@@ -11,15 +11,6 @@ public class Razorbrute extends MonsterAttacks {
         return 9;
     }
 
-    @Override
-    protected Integer defense() {
-        return 7;
-    }
-
-    @Override
-    protected Integer agility() {
-        return null;
-    }
 
     @Override
     protected String getName() {

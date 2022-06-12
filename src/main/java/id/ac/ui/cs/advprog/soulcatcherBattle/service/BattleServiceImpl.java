@@ -1,13 +1,19 @@
 package id.ac.ui.cs.advprog.soulcatcherBattle.service;
 
 import id.ac.ui.cs.advprog.soulcatcherBattle.core.entities.BattlePersona;
+import id.ac.ui.cs.advprog.soulcatcherBattle.core.entities.Entity;
 import id.ac.ui.cs.advprog.soulcatcherBattle.core.entities.Monster;
 import id.ac.ui.cs.advprog.soulcatcherBattle.core.enums.EntityState;
+import id.ac.ui.cs.advprog.soulcatcherBattle.model.DTOs.AttackDTO;
+import id.ac.ui.cs.advprog.soulcatcherBattle.model.DTOs.DamageDTO;
 import id.ac.ui.cs.advprog.soulcatcherBattle.vo.BattleRequest;
 import id.ac.ui.cs.advprog.soulcatcherBattle.vo.Persona;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BattleServiceImpl implements BattleService{
 
@@ -39,6 +45,35 @@ public class BattleServiceImpl implements BattleService{
             restTemplate.getForEntity("http://HOME-SERVICE/update-fragment/{id}/{newFragment}", String.class, personaId, newSoulFragments);
         }
 
+    }
+
+    @Override
+    public AttackDTO playerAttack(BattlePersona battlePersona, Monster monster) {
+        monster.setHP(monster.getHP()-battlePersona.getAttack());
+        var damageDTO = getDamageFromAttack(battlePersona.getAttack());
+        List<Entity> target = new ArrayList<>();
+        List<DamageDTO> damageDTOS = new ArrayList<>();
+        target.add(monster);
+        damageDTOS.add(damageDTO);
+        return new AttackDTO(battlePersona,target,damageDTOS);
+    }
+
+    @Override
+    public AttackDTO monsterAttack(BattlePersona battlePersona, Monster monster){
+        battlePersona.setHP(battlePersona.getHP()- monster.getAttack());
+        var damageDTO = getDamageFromAttack(monster.getAttack());
+        List<Entity> target = new ArrayList<>();
+        List<DamageDTO> damageDTOS = new ArrayList<>();
+        target.add(battlePersona);
+        damageDTOS.add(damageDTO);
+        return new AttackDTO(monster,target,damageDTOS);
+    }
+
+    @Override
+    public DamageDTO getDamageFromAttack(int attackerPoint) {
+        DamageDTO damageDTO = new DamageDTO();
+        damageDTO.setDamage(attackerPoint+damageDTO.getDamage());
+        return damageDTO;
     }
 
 }

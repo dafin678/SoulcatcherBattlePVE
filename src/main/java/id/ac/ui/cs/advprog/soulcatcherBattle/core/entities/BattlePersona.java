@@ -14,7 +14,14 @@ public class BattlePersona extends Entity {
     }
 
     @Override
-    public int getDefense() {
-        return 0;
+    public int getHP() {
+        return persona.getHp();
     }
+
+    @Override
+    public void setHP(int hp) {
+        persona.setHp(hp);
+    }
+
+
 }

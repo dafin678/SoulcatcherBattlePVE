@@ -32,7 +32,7 @@ public class BattleServiceImpl implements BattleService{
             Integer soulChance = random.nextInt(101);
 
             if(soulChance <= 30) {
-                ResponseEntity soulResponse = restTemplate.postForEntity("http://HOME-SERVICE/assign-persouna-soul", new HttpEntity<>(personaId), BattleRewardDTO.class);
+                ResponseEntity soulResponse = restTemplate.postForEntity("http://HOME-SERVICE/assign-persona-soul", new HttpEntity<>(personaId), BattleRewardDTO.class);
                 return (BattleRewardDTO) soulResponse.getBody();
 
             } else {

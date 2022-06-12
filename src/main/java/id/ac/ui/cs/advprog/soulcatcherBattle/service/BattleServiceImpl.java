@@ -1,13 +1,9 @@
 package id.ac.ui.cs.advprog.soulcatcherBattle.service;
-
 import id.ac.ui.cs.advprog.soulcatcherBattle.core.entities.BattlePersona;
 import id.ac.ui.cs.advprog.soulcatcherBattle.core.entities.Monster;
-
 import id.ac.ui.cs.advprog.soulcatcherBattle.core.entities.monsters.Razorbrute;
 import id.ac.ui.cs.advprog.soulcatcherBattle.core.entities.monsters.Rotflayer;
 import id.ac.ui.cs.advprog.soulcatcherBattle.core.entities.monsters.Webteeth;
-
-
 import id.ac.ui.cs.advprog.soulcatcherBattle.model.DTOs.AttackDTO;
 import id.ac.ui.cs.advprog.soulcatcherBattle.model.DTOs.BattleRewardDTO;
 import id.ac.ui.cs.advprog.soulcatcherBattle.model.DTOs.DamageDTO;
@@ -16,7 +12,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;

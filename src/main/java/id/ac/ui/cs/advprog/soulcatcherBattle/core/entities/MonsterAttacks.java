@@ -1,13 +1,11 @@
 package id.ac.ui.cs.advprog.soulcatcherBattle.core.entities;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public abstract class MonsterAttacks {
 
+    static final int HEALTH = 100;
 
     public Integer health() {
-        return 100;
+        return HEALTH;
     }
 
     protected abstract Integer attackDamage();

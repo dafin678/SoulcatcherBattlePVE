@@ -24,37 +24,37 @@ public class BattleServiceImpl implements BattleService{
 
     @Override
     public BattleRewardDTO assignWinReward(int personaId) {
-        ResponseEntity fragmentResponse = restTemplate.postForEntity("http://HOME-SERVICE/update-fragment/3", new HttpEntity<>(personaId), BattleRewardDTO.class);
+        ResponseEntity<BattleRewardDTO> fragmentResponse = restTemplate.postForEntity("http://HOME-SERVICE/update-fragment/3", new HttpEntity<>(personaId), BattleRewardDTO.class);
 
-        Random random = new Random();
+        var random = new Random();
         Integer dropChance = random.nextInt(101);
 
         if(dropChance <= 45) {
             Integer soulChance = random.nextInt(101);
 
             if(soulChance <= 30) {
-                ResponseEntity soulResponse = restTemplate.postForEntity("http://HOME-SERVICE/assign-persona-soul", new HttpEntity<>(null, null), BattleRewardDTO.class);
-                return (BattleRewardDTO) soulResponse.getBody();
+                ResponseEntity<BattleRewardDTO> soulResponse = restTemplate.postForEntity("http://HOME-SERVICE/assign-persona-soul", new HttpEntity<>(null, null), BattleRewardDTO.class);
+                return soulResponse.getBody();
 
             } else {
-                ResponseEntity consumableResponse = restTemplate.postForEntity("http://HOME-SERVICE/assign-consumable", new HttpEntity<>(null, null), BattleRewardDTO.class);
-                return (BattleRewardDTO) consumableResponse.getBody();
+                ResponseEntity<BattleRewardDTO> consumableResponse = restTemplate.postForEntity("http://HOME-SERVICE/assign-consumable", new HttpEntity<>(null, null), BattleRewardDTO.class);
+                return consumableResponse.getBody();
             }
 
         }
-        return (BattleRewardDTO) fragmentResponse.getBody();
+        return fragmentResponse.getBody();
     }
 
     @Override
     public BattleRewardDTO assignLoseReward(int personaId) {
-        ResponseEntity response = restTemplate.postForEntity("http://HOME-SERVICE/update-fragment/1", new HttpEntity<>(personaId), BattleRewardDTO.class);
-        return (BattleRewardDTO) response.getBody();
+        ResponseEntity<BattleRewardDTO> response = restTemplate.postForEntity("http://HOME-SERVICE/update-fragment/1", new HttpEntity<>(personaId), BattleRewardDTO.class);
+        return response.getBody();
     }
 
     @Override
     public AttackDTO attack() {
-        BattlePersona battlePersona = new BattlePersona();
-        Monster monster = getMonster();
+        var battlePersona = new BattlePersona();
+        var monster = getMonster();
         var personaDamageDTO = getDamageFromAttack(battlePersona.getAttack());
         var monsterDamageDTO = getDamageFromAttack(monster.getAttack());
         monster.refreshState();
@@ -67,16 +67,16 @@ public class BattleServiceImpl implements BattleService{
 
     @Override
     public DamageDTO getDamageFromAttack(int attackerPoint) {
-        DamageDTO damageDTO = new DamageDTO();
+        var damageDTO = new DamageDTO();
         damageDTO.setDamage(attackerPoint+damageDTO.getDamage());
         return damageDTO;
     }
 
     @Override
     public Monster getMonster() {
-        Random random = new Random();
+        var random = new Random();
 
-        int x = random.nextInt(3);
+        var x = random.nextInt(3);
         if(x == 0){
             return new Monster(new Razorbrute());
         }
@@ -92,7 +92,7 @@ public class BattleServiceImpl implements BattleService{
     @Override
     public List<Monster> getMonsterList() {
         List<Monster> monsterList = new ArrayList<>();
-        for(int j = 0 ; j<3 ; j++){
+        for(var j = 0 ; j<3 ; j++){
             monsterList.add(getMonster());
         }
         return monsterList;

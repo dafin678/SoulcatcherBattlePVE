@@ -4,22 +4,24 @@ import id.ac.ui.cs.advprog.soulcatcherBattle.core.entities.BattlePersona;
 import id.ac.ui.cs.advprog.soulcatcherBattle.core.entities.Monster;
 import id.ac.ui.cs.advprog.soulcatcherBattle.core.entities.MonsterAttacks;
 import id.ac.ui.cs.advprog.soulcatcherBattle.model.DTOs.AttackDTO;
+import id.ac.ui.cs.advprog.soulcatcherBattle.model.DTOs.BattleRewardDTO;
 import id.ac.ui.cs.advprog.soulcatcherBattle.model.DTOs.DamageDTO;
-import id.ac.ui.cs.advprog.soulcatcherBattle.vo.BattleRequest;
-import id.ac.ui.cs.advprog.soulcatcherBattle.vo.Persona;
+
+import java.util.List;
 
 public interface BattleService {
-    Persona getPersona(BattleRequest battleRequest);
+    BattleRewardDTO assignWinReward(int personaId);
 
-    void assignReward(BattlePersona battlePersona, Monster monster);
+    BattleRewardDTO assignLoseReward(int personaId);
 
-    AttackDTO playerAttack(int personaID);
+    AttackDTO attack();
 
-    AttackDTO monsterAttack(int personaID, Monster monster);
 
     DamageDTO getDamageFromAttack(int attackerPoint);
 
     Monster getMonster();
+
+    List<Monster> getMonsterList();
 
 
 }

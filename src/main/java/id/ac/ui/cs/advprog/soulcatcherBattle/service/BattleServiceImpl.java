@@ -1,17 +1,18 @@
 package id.ac.ui.cs.advprog.soulcatcherBattle.service;
 
 import id.ac.ui.cs.advprog.soulcatcherBattle.core.entities.BattlePersona;
-import id.ac.ui.cs.advprog.soulcatcherBattle.core.entities.Entity;
 import id.ac.ui.cs.advprog.soulcatcherBattle.core.entities.Monster;
+
 import id.ac.ui.cs.advprog.soulcatcherBattle.core.entities.monsters.Razorbrute;
 import id.ac.ui.cs.advprog.soulcatcherBattle.core.entities.monsters.Rotflayer;
 import id.ac.ui.cs.advprog.soulcatcherBattle.core.entities.monsters.Webteeth;
-import id.ac.ui.cs.advprog.soulcatcherBattle.core.enums.EntityState;
+
+
 import id.ac.ui.cs.advprog.soulcatcherBattle.model.DTOs.AttackDTO;
+import id.ac.ui.cs.advprog.soulcatcherBattle.model.DTOs.BattleRewardDTO;
 import id.ac.ui.cs.advprog.soulcatcherBattle.model.DTOs.DamageDTO;
-import id.ac.ui.cs.advprog.soulcatcherBattle.vo.BattleRequest;
-import id.ac.ui.cs.advprog.soulcatcherBattle.vo.Persona;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -27,51 +28,47 @@ public class BattleServiceImpl implements BattleService{
     private RestTemplate restTemplate;
 
     @Override
-    public Persona getPersona(BattleRequest battleRequest) {
-        int personaId = battleRequest.getPersonaId();
-        ResponseEntity<Persona> response = restTemplate.getForEntity("http://HOME-SERVICE/get-persona/{id}", Persona.class, personaId);
-        Persona persona = response.getBody();
-        return persona;
-    }
+    public BattleRewardDTO assignWinReward(int personaId) {
+        ResponseEntity fragmentResponse = restTemplate.postForEntity("http://HOME-SERVICE/update-fragment/3", new HttpEntity<>(personaId), BattleRewardDTO.class);
 
-    @Override
-    public void assignReward(BattlePersona battlePersona, Monster monster) {
-        Persona persona = battlePersona.getPersona();
-        int personaId = persona.getId();
+        Random random = new Random();
+        Integer dropChance = random.nextInt(101);
 
-        if(battlePersona.getState().equals(EntityState.ALIVE) && monster.getState().equals(EntityState.DEAD)) {
-            int newSoulFragments = persona.getSoulFragment() + 3;
+        if(dropChance <= 45) {
+            Integer soulChance = random.nextInt(101);
 
-            restTemplate.getForEntity("http://HOME-SERVICE/update-fragment/{id}/{newFragment}", String.class, personaId, newSoulFragments);
-            restTemplate.getForEntity("http://HOME-SERVICE/assign-persouna-soul", String.class);
+            if(soulChance <= 30) {
+                ResponseEntity soulResponse = restTemplate.postForEntity("http://HOME-SERVICE/assign-persona-soul", new HttpEntity<>(null, null), BattleRewardDTO.class);
+                return (BattleRewardDTO) soulResponse.getBody();
 
-        } else if (battlePersona.getState().equals(EntityState.DEAD) && monster.getState().equals(EntityState.ALIVE)) {
-            int newSoulFragments = persona.getSoulFragment() + 1;
+            } else {
+                ResponseEntity consumableResponse = restTemplate.postForEntity("http://HOME-SERVICE/assign-consumable", new HttpEntity<>(null, null), BattleRewardDTO.class);
+                return (BattleRewardDTO) consumableResponse.getBody();
+            }
 
-            restTemplate.getForEntity("http://HOME-SERVICE/update-fragment/{id}/{newFragment}", String.class, personaId, newSoulFragments);
         }
-
+        return (BattleRewardDTO) fragmentResponse.getBody();
     }
 
     @Override
-    public AttackDTO playerAttack(int personaID) {
-        BattlePersona battlePersona = new BattlePersona(personaID);
-        var damageDTO = getDamageFromAttack(battlePersona.getAttack());
+    public BattleRewardDTO assignLoseReward(int personaId) {
+        ResponseEntity response = restTemplate.postForEntity("http://HOME-SERVICE/update-fragment/1", new HttpEntity<>(personaId), BattleRewardDTO.class);
+        return (BattleRewardDTO) response.getBody();
+    }
+
+    @Override
+    public AttackDTO attack() {
+        BattlePersona battlePersona = new BattlePersona();
         Monster monster = getMonster();
+        var personaDamageDTO = getDamageFromAttack(battlePersona.getAttack());
+        var monsterDamageDTO = getDamageFromAttack(monster.getAttack());
         monster.refreshState();
-        monster.processDamage(damageDTO);
-        return new AttackDTO(battlePersona.getAttack(),monster.getHealth(),monster.getState().toString(), monster.getId());
-
-    }
-
-    @Override
-    public AttackDTO monsterAttack(int personaID, Monster monster){
-        var damageDTO = getDamageFromAttack(monster.getAttack());
-        BattlePersona battlePersona = new BattlePersona(personaID);
+        monster.processDamage(personaDamageDTO);
         battlePersona.refreshState();
-        battlePersona.processDamage(damageDTO);
-        return new AttackDTO(monster.getAttack(),battlePersona.getHealth(),battlePersona.getState().toString(), battlePersona.getId());
+        battlePersona.processDamage(monsterDamageDTO);
+        return new AttackDTO(battlePersona.getAttack(),monster.getHealth(),monster.getState().toString(), monster.getId());
     }
+
 
     @Override
     public DamageDTO getDamageFromAttack(int attackerPoint) {
@@ -97,5 +94,15 @@ public class BattleServiceImpl implements BattleService{
         return null;
     }
 
+    @Override
+    public List<Monster> getMonsterList() {
+        List<Monster> monsterList = new ArrayList<>();
+        for(int j = 0 ; j<3 ; j++){
+            monsterList.add(getMonster());
+        }
+        return monsterList;
+    }
+
 
 }
+

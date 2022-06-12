@@ -10,15 +10,8 @@ public class Rotflayer extends MonsterAttacks {
         return 7;
     }
 
-    @Override
-    protected Integer defense() {
-        return 8;
-    }
 
-    @Override
-    protected Integer agility() {
-        return null;
-    }
+
 
     @Override
     protected String getName() {

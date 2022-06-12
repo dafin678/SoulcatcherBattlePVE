@@ -10,15 +10,6 @@ public class Webteeth extends MonsterAttacks {
         return 8;
     }
 
-    @Override
-    protected Integer defense() {
-        return 8;
-    }
-
-    @Override
-    protected Integer agility() {
-        return null;
-    }
 
     @Override
     protected String getName() {

@@ -7,6 +7,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class DamageDTO {
     int damage;
-//    boolean crit;
 }
 

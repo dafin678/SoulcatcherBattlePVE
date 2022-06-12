@@ -30,7 +30,12 @@ public class Monster extends Entity {
     }
 
     @Override
-    public int getDefense() {
-        return monsterAttacks.defense();
+    public int getHP() {
+        return monsterAttacks.health();
+    }
+
+    @Override
+    public void setHP(int hp) {
+        this.health=hp;
     }
 }

@@ -1,7 +1,7 @@
 package id.ac.ui.cs.advprog.soulcatcherBattle.core.entities;
 
 import id.ac.ui.cs.advprog.soulcatcherBattle.model.DTOs.DamageDTO;
-import id.ac.ui.cs.advprog.soulcatcherBattle.vo.Persona;
+import id.ac.ui.cs.advprog.soulcatcherBattle.core.vo.Persona;
 import lombok.Data;
 
 @Data

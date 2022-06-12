@@ -1,4 +1,4 @@
-package id.ac.ui.cs.advprog.soulcatcherBattle.vo;
+package id.ac.ui.cs.advprog.soulcatcherBattle.core.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

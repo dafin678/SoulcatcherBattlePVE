@@ -1,5 +1,6 @@
 package id.ac.ui.cs.advprog.soulcatcherBattle.core.entities;
 
+import id.ac.ui.cs.advprog.soulcatcherBattle.model.DTOs.DamageDTO;
 import id.ac.ui.cs.advprog.soulcatcherBattle.vo.Persona;
 import lombok.Data;
 
@@ -16,6 +17,11 @@ public class BattlePersona extends Entity {
     @Override
     public int getHP() {
         return persona.getHp();
+    }
+
+    @Override
+    public void processDamage(DamageDTO damageDto) {
+        persona.setHp(persona.getHp()-damageDto.getDamage());
     }
 
     @Override

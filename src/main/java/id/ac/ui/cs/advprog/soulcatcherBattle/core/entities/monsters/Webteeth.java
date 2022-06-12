@@ -15,4 +15,9 @@ public class Webteeth extends MonsterAttacks {
     protected String getName() {
         return name;
     }
+
+    @Override
+    protected int getId() {
+        return 2;
+    }
 }

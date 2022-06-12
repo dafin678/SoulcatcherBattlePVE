@@ -9,18 +9,21 @@ public abstract class Entity {
     EntityState state;
     int health;
 
+
     public abstract int getAttack();
 
     public abstract int getHP();
 
     public abstract void processDamage(DamageDTO damageDto);
 
-
     public void refreshState() {
         this.health = Math.max(health, 0);
         if (health <= 0) state = EntityState.DEAD;
     }
 
-
     public abstract void setHP(int hp);
+
+    public abstract String getName();
+
+    public abstract int getId();
 }

@@ -1,5 +1,6 @@
 package id.ac.ui.cs.advprog.soulcatcherBattle.core.entities;
 
+import id.ac.ui.cs.advprog.soulcatcherBattle.core.enums.EntityState;
 import id.ac.ui.cs.advprog.soulcatcherBattle.model.DTOs.DamageDTO;
 import id.ac.ui.cs.advprog.soulcatcherBattle.vo.Persona;
 import lombok.Data;
@@ -8,6 +9,14 @@ import lombok.Data;
 public class BattlePersona extends Entity {
 
     private Persona persona;
+    private int id;
+
+    public BattlePersona(int id) {
+        this.health = persona.getHp();
+        this.state = EntityState.ALIVE;
+        this.id=id;
+    }
+
 
     @Override
     public int getAttack() {
@@ -16,7 +25,7 @@ public class BattlePersona extends Entity {
 
     @Override
     public int getHP() {
-        return persona.getHp();
+        return this.health;
     }
 
     @Override
@@ -27,6 +36,18 @@ public class BattlePersona extends Entity {
     @Override
     public void setHP(int hp) {
         persona.setHp(hp);
+        this.health=hp;
+
+    }
+
+    @Override
+    public String getName() {
+        return persona.getName();
+    }
+
+    @Override
+    public int getId() {
+        return persona.getId();
     }
 
 

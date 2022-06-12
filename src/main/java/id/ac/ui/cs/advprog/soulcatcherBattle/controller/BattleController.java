@@ -1,5 +1,6 @@
 package id.ac.ui.cs.advprog.soulcatcherBattle.controller;
 
+import id.ac.ui.cs.advprog.soulcatcherBattle.core.entities.BattlePersona;
 import id.ac.ui.cs.advprog.soulcatcherBattle.core.entities.Monster;
 import id.ac.ui.cs.advprog.soulcatcherBattle.core.entities.monsters.Razorbrute;
 import id.ac.ui.cs.advprog.soulcatcherBattle.core.entities.monsters.Rotflayer;
@@ -25,9 +26,9 @@ public class BattleController {
     @ResponseBody
     public ResponseEntity<List<EnemyDetail>> getEnemyDetails() {
         List<EnemyDetail> enemyList = new ArrayList<>(); // pindahin ke service sesuai implementasi sendiri
-        enemyList.add(new EnemyDetail(new Monster(new Rotflayer(), "Enemy1")));
-        enemyList.add(new EnemyDetail(new Monster(new Razorbrute(), "Enemy2")));
-        enemyList.add(new EnemyDetail(new Monster(new Webteeth(), "Enemy3")));
+        enemyList.add(new EnemyDetail(new Monster(new Rotflayer())));
+        enemyList.add(new EnemyDetail(new Monster(new Razorbrute())));
+        enemyList.add(new EnemyDetail(new Monster(new Webteeth())));
         return ResponseEntity.ok(enemyList);
     }
 
@@ -35,6 +36,8 @@ public class BattleController {
     @CrossOrigin(origins = "http://localhost:5000")
     @ResponseBody
     public ResponseEntity<EnemyDetail> attackMonster(@RequestBody EnemyDetail enemyDetail) {
+
+
         return ResponseEntity.ok(enemyDetail); // dto nya damage player, hp musuh, state si musuh, berlaku juga buat sebaliknya (tambahin id persona)
     }
 

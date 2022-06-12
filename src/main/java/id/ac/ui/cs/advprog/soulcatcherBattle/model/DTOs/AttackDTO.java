@@ -9,8 +9,8 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 public class AttackDTO {
-    Entity from;
-    List<Entity> to;
-    List<DamageDTO> attacks;
+    int damage;
+    int enemyHealth;
+    String enemyState;
+    int enemyId;
 }
-

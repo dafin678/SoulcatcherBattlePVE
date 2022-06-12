@@ -3,6 +3,9 @@ package id.ac.ui.cs.advprog.soulcatcherBattle.service;
 import id.ac.ui.cs.advprog.soulcatcherBattle.core.entities.BattlePersona;
 import id.ac.ui.cs.advprog.soulcatcherBattle.core.entities.Entity;
 import id.ac.ui.cs.advprog.soulcatcherBattle.core.entities.Monster;
+import id.ac.ui.cs.advprog.soulcatcherBattle.core.entities.monsters.Razorbrute;
+import id.ac.ui.cs.advprog.soulcatcherBattle.core.entities.monsters.Rotflayer;
+import id.ac.ui.cs.advprog.soulcatcherBattle.core.entities.monsters.Webteeth;
 import id.ac.ui.cs.advprog.soulcatcherBattle.core.enums.EntityState;
 import id.ac.ui.cs.advprog.soulcatcherBattle.model.DTOs.AttackDTO;
 import id.ac.ui.cs.advprog.soulcatcherBattle.model.DTOs.DamageDTO;
@@ -15,6 +18,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class BattleServiceImpl implements BattleService{
@@ -50,27 +54,23 @@ public class BattleServiceImpl implements BattleService{
     }
 
     @Override
-    public AttackDTO playerAttack(BattlePersona battlePersona, Monster monster) {
+    public AttackDTO playerAttack(int personaID) {
+        BattlePersona battlePersona = new BattlePersona(personaID);
         var damageDTO = getDamageFromAttack(battlePersona.getAttack());
+        Monster monster = getMonster();
         monster.refreshState();
         monster.processDamage(damageDTO);
-        List<Entity> target = new ArrayList<>();
-        List<DamageDTO> damageDTOS = new ArrayList<>();
-        target.add(monster);
-        damageDTOS.add(damageDTO);
-        return new AttackDTO(battlePersona,target,damageDTOS);
+        return new AttackDTO(battlePersona.getAttack(),monster.getHealth(),monster.getState().toString(), monster.getId());
+
     }
 
     @Override
-    public AttackDTO monsterAttack(BattlePersona battlePersona, Monster monster){
+    public AttackDTO monsterAttack(int personaID, Monster monster){
         var damageDTO = getDamageFromAttack(monster.getAttack());
+        BattlePersona battlePersona = new BattlePersona(personaID);
         battlePersona.refreshState();
         battlePersona.processDamage(damageDTO);
-        List<Entity> target = new ArrayList<>();
-        List<DamageDTO> damageDTOS = new ArrayList<>();
-        target.add(battlePersona);
-        damageDTOS.add(damageDTO);
-        return new AttackDTO(monster,target,damageDTOS);
+        return new AttackDTO(monster.getAttack(),battlePersona.getHealth(),battlePersona.getState().toString(), battlePersona.getId());
     }
 
     @Override
@@ -79,5 +79,23 @@ public class BattleServiceImpl implements BattleService{
         damageDTO.setDamage(attackerPoint+damageDTO.getDamage());
         return damageDTO;
     }
+
+    @Override
+    public Monster getMonster() {
+        Random random = new Random();
+
+        int x = random.nextInt(3);
+        if(x == 0){
+            return new Monster(new Razorbrute());
+        }
+        else if (x==1){
+            return new Monster(new Rotflayer());
+        }
+        else if (x==2) {
+            return new Monster(new Webteeth());
+        }
+        return null;
+    }
+
 
 }

@@ -3,18 +3,17 @@ package id.ac.ui.cs.advprog.soulcatcherBattle.service;
 import id.ac.ui.cs.advprog.soulcatcherBattle.core.entities.BattlePersona;
 import id.ac.ui.cs.advprog.soulcatcherBattle.core.entities.Entity;
 import id.ac.ui.cs.advprog.soulcatcherBattle.core.entities.Monster;
-import id.ac.ui.cs.advprog.soulcatcherBattle.core.enums.EntityState;
 import id.ac.ui.cs.advprog.soulcatcherBattle.model.DTOs.AttackDTO;
+import id.ac.ui.cs.advprog.soulcatcherBattle.model.DTOs.BattleRewardDTO;
 import id.ac.ui.cs.advprog.soulcatcherBattle.model.DTOs.DamageDTO;
-import id.ac.ui.cs.advprog.soulcatcherBattle.vo.BattleRequest;
-import id.ac.ui.cs.advprog.soulcatcherBattle.vo.Persona;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class BattleServiceImpl implements BattleService{
@@ -23,30 +22,32 @@ public class BattleServiceImpl implements BattleService{
     private RestTemplate restTemplate;
 
     @Override
-    public Persona getPersona(BattleRequest battleRequest) {
-        int personaId = battleRequest.getPersonaId();
-        ResponseEntity<Persona> response = restTemplate.getForEntity("http://HOME-SERVICE/get-persona/{id}", Persona.class, personaId);
-        Persona persona = response.getBody();
-        return persona;
+    public BattleRewardDTO assignWinReward(int personaId) {
+        ResponseEntity fragmentResponse = restTemplate.postForEntity("http://HOME-SERVICE/update-fragment/3", new HttpEntity<>(personaId), BattleRewardDTO.class);
+
+        Random random = new Random();
+        Integer dropChance = random.nextInt(101);
+
+        if(dropChance <= 45) {
+            Integer soulChance = random.nextInt(101);
+
+            if(soulChance <= 30) {
+                ResponseEntity soulResponse = restTemplate.postForEntity("http://HOME-SERVICE/assign-persouna-soul", new HttpEntity<>(personaId), BattleRewardDTO.class);
+                return (BattleRewardDTO) soulResponse.getBody();
+
+            } else {
+                ResponseEntity consumableResponse = restTemplate.postForEntity("http://HOME-SERVICE/assign-consumable", new HttpEntity<>(""), BattleRewardDTO.class);
+                return (BattleRewardDTO) consumableResponse.getBody();
+            }
+
+        }
+        return (BattleRewardDTO) fragmentResponse.getBody();
     }
 
     @Override
-    public void assignReward(BattlePersona battlePersona, Monster monster) {
-        Persona persona = battlePersona.getPersona();
-        int personaId = persona.getId();
-
-        if(battlePersona.getState().equals(EntityState.ALIVE) && monster.getState().equals(EntityState.DEAD)) {
-            int newSoulFragments = persona.getSoulFragment() + 3;
-
-            restTemplate.getForEntity("http://HOME-SERVICE/update-fragment/{id}/{newFragment}", String.class, personaId, newSoulFragments);
-            restTemplate.getForEntity("http://HOME-SERVICE/assign-persouna-soul", String.class);
-
-        } else if (battlePersona.getState().equals(EntityState.DEAD) && monster.getState().equals(EntityState.ALIVE)) {
-            int newSoulFragments = persona.getSoulFragment() + 1;
-
-            restTemplate.getForEntity("http://HOME-SERVICE/update-fragment/{id}/{newFragment}", String.class, personaId, newSoulFragments);
-        }
-
+    public BattleRewardDTO assignLoseReward(int personaId) {
+        ResponseEntity response = restTemplate.postForEntity("http://HOME-SERVICE/update-fragment/1", new HttpEntity<>(personaId), BattleRewardDTO.class);
+        return (BattleRewardDTO) response.getBody();
     }
 
     @Override

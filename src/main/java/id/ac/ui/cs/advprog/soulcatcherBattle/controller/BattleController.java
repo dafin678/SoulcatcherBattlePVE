@@ -5,6 +5,7 @@ import id.ac.ui.cs.advprog.soulcatcherBattle.core.entities.monsters.Razorbrute;
 import id.ac.ui.cs.advprog.soulcatcherBattle.core.entities.monsters.Rotflayer;
 import id.ac.ui.cs.advprog.soulcatcherBattle.core.entities.monsters.Webteeth;
 import id.ac.ui.cs.advprog.soulcatcherBattle.core.vo.EnemyDetail;
+import id.ac.ui.cs.advprog.soulcatcherBattle.model.DTOs.BattleRewardDTO;
 import id.ac.ui.cs.advprog.soulcatcherBattle.service.BattleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -38,5 +39,17 @@ public class BattleController {
         return ResponseEntity.ok(enemyDetail); // dto nya damage player, hp musuh, state si musuh, berlaku juga buat sebaliknya (tambahin id persona)
     }
 
+    @RequestMapping(method = RequestMethod.POST, path = "/win-battle", produces = {"application/json"})
+    @CrossOrigin(origins = "http://localhost:5000")
+    @ResponseBody
+    public ResponseEntity<BattleRewardDTO> win(@RequestBody Integer personaId) {
+        return ResponseEntity.ok(battleService.assignWinReward(personaId));
+    }
 
+    @RequestMapping(method = RequestMethod.POST, path = "/lose-battle", produces = {"application/json"})
+    @CrossOrigin(origins = "http://localhost:5000")
+    @ResponseBody
+    public ResponseEntity<BattleRewardDTO> lose(@RequestBody Integer personaId) {
+        return ResponseEntity.ok(battleService.assignLoseReward(personaId));
+    }
 }

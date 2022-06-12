@@ -49,8 +49,9 @@ public class BattleServiceImpl implements BattleService{
 
     @Override
     public AttackDTO playerAttack(BattlePersona battlePersona, Monster monster) {
-        monster.setHP(monster.getHP()-battlePersona.getAttack());
         var damageDTO = getDamageFromAttack(battlePersona.getAttack());
+        monster.refreshState();
+        monster.processDamage(damageDTO);
         List<Entity> target = new ArrayList<>();
         List<DamageDTO> damageDTOS = new ArrayList<>();
         target.add(monster);
@@ -60,8 +61,9 @@ public class BattleServiceImpl implements BattleService{
 
     @Override
     public AttackDTO monsterAttack(BattlePersona battlePersona, Monster monster){
-        battlePersona.setHP(battlePersona.getHP()- monster.getAttack());
         var damageDTO = getDamageFromAttack(monster.getAttack());
+        battlePersona.refreshState();
+        battlePersona.processDamage(damageDTO);
         List<Entity> target = new ArrayList<>();
         List<DamageDTO> damageDTOS = new ArrayList<>();
         target.add(battlePersona);

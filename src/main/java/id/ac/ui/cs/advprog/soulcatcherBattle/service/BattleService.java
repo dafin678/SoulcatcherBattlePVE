@@ -12,7 +12,7 @@ public interface BattleService {
 
     BattleRewardDTO assignLoseReward(int personaId);
 
-    AttackDTO attack();
+    AttackDTO attack(AttackDTO attackDTO);
 
 
     DamageDTO getDamageFromAttack(int attackerPoint);

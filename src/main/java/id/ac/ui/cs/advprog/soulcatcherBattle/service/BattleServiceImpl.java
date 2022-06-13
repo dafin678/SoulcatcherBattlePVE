@@ -52,16 +52,16 @@ public class BattleServiceImpl implements BattleService{
     }
 
     @Override
-    public AttackDTO attack() {
-        var battlePersona = new BattlePersona();
-        var monster = getMonster();
-        var personaDamageDTO = getDamageFromAttack(battlePersona.getAttack());
-        var monsterDamageDTO = getDamageFromAttack(monster.getAttack());
-        monster.refreshState();
-        monster.processDamage(personaDamageDTO);
-        battlePersona.refreshState();
-        battlePersona.processDamage(monsterDamageDTO);
-        return new AttackDTO(battlePersona.getAttack(),monster.getHealth(),monster.getState().toString(), monster.getId());
+    public AttackDTO attack(AttackDTO attackDTO) {
+        int damage = attackDTO.getDamage();
+        int health = attackDTO.getEnemyHealth();
+        int newHp = health-damage;
+        if (newHp <= 0) {
+            attackDTO.setEnemyState("dead");
+            newHp = 0;
+        }
+        attackDTO.setEnemyHealth(newHp);
+        return attackDTO;
     }
 
 

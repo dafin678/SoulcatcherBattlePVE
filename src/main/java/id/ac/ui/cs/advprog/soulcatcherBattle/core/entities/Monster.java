@@ -16,7 +16,9 @@ public class Monster extends Entity {
         this.monsterAttacks = monsterAttacks;
         this.health = monsterAttacks.health();
         this.state = EntityState.ALIVE;
-
+        this.damage = monsterAttacks.attackDamage();
+        this.name = monsterAttacks.getName();
+        this.entityState = "alive";
     }
 
 

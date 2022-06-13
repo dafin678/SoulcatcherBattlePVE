@@ -1,9 +1,9 @@
-package id.ac.ui.cs.advprog.soulcatcherBattle.controller;
+package id.ac.ui.cs.advprog.soulcatcherbattle.controller;
 
-import id.ac.ui.cs.advprog.soulcatcherBattle.core.entities.Monster;
-import id.ac.ui.cs.advprog.soulcatcherBattle.model.DTOs.AttackDTO;
-import id.ac.ui.cs.advprog.soulcatcherBattle.model.DTOs.BattleRewardDTO;
-import id.ac.ui.cs.advprog.soulcatcherBattle.service.BattleService;
+import id.ac.ui.cs.advprog.soulcatcherbattle.core.entities.Monster;
+import id.ac.ui.cs.advprog.soulcatcherbattle.model.dto.AttackDTO;
+import id.ac.ui.cs.advprog.soulcatcherbattle.model.dto.BattleRewardDTO;
+import id.ac.ui.cs.advprog.soulcatcherbattle.service.BattleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

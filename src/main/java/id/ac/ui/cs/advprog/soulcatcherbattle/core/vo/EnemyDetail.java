@@ -1,6 +1,6 @@
-package id.ac.ui.cs.advprog.soulcatcherBattle.core.vo;
+package id.ac.ui.cs.advprog.soulcatcherbattle.core.vo;
 
-import id.ac.ui.cs.advprog.soulcatcherBattle.core.entities.Entity;
+import id.ac.ui.cs.advprog.soulcatcherbattle.core.entities.Entity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

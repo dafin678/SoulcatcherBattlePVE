@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot' version '2.7.0'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
+    id "org.sonarqube" version "3.0"
 }
 
 group = 'id.ac.ui.cs.advprog'
@@ -42,4 +43,12 @@ dependencyManagement {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+sonarqube {
+    properties {
+        property "sonar.projectKey", "apb12022_soulcatcher-battle_AYFYQTw2mTzPxwcesLtK"
+        property "sonar.host.url", "https://sonarqube.cs.ui.ac.id"
+        property "sonar.login", "907ddb2c7aab805b9832c837c02eb971208b2213"
+    }
 }

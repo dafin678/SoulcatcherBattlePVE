@@ -18,12 +18,11 @@ import java.util.Random;
 @Service
 public class BattleServiceImpl implements BattleService{
 
-    @Autowired
-    private RestTemplate restTemplate;
+    private static final RestTemplate REST_TEMPLATE = new RestTemplate();
 
     @Override
     public BattleRewardDTO assignWinReward(int personaId) {
-        ResponseEntity<BattleRewardDTO> fragmentResponse = restTemplate.postForEntity("https://soulcatcher-b1.herokuapp.com/update-fragment/3", new HttpEntity<>(personaId), BattleRewardDTO.class);
+        ResponseEntity<BattleRewardDTO> fragmentResponse = REST_TEMPLATE.postForEntity("https://soulcatcher-b1.herokuapp.com/update-fragment/3", new HttpEntity<>(personaId), BattleRewardDTO.class);
 
         var random = new Random();
         Integer dropChance = random.nextInt(101);
@@ -32,11 +31,11 @@ public class BattleServiceImpl implements BattleService{
             Integer soulChance = random.nextInt(101);
 
             if(soulChance <= 30) {
-                ResponseEntity<BattleRewardDTO> soulResponse = restTemplate.postForEntity("https://soulcatcher-b1.herokuapp.com/assign-persona-soul", new HttpEntity<>(null, null), BattleRewardDTO.class);
+                ResponseEntity<BattleRewardDTO> soulResponse = REST_TEMPLATE.postForEntity("https://soulcatcher-b1.herokuapp.com/assign-persona-soul", new HttpEntity<>(null, null), BattleRewardDTO.class);
                 return soulResponse.getBody();
 
             } else {
-                ResponseEntity<BattleRewardDTO> consumableResponse = restTemplate.postForEntity("https://soulcatcher-b1.herokuapp.com/assign-consumable", new HttpEntity<>(null, null), BattleRewardDTO.class);
+                ResponseEntity<BattleRewardDTO> consumableResponse = REST_TEMPLATE.postForEntity("https://soulcatcher-b1.herokuapp.com/assign-consumable", new HttpEntity<>(null, null), BattleRewardDTO.class);
                 return consumableResponse.getBody();
             }
 
@@ -46,7 +45,7 @@ public class BattleServiceImpl implements BattleService{
 
     @Override
     public BattleRewardDTO assignLoseReward(int personaId) {
-        ResponseEntity<BattleRewardDTO> response = restTemplate.postForEntity("https://soulcatcher-b1.herokuapp.com/update-fragment/1", new HttpEntity<>(personaId), BattleRewardDTO.class);
+        ResponseEntity<BattleRewardDTO> response = REST_TEMPLATE.postForEntity("https://soulcatcher-b1.herokuapp.com/update-fragment/1", new HttpEntity<>(personaId), BattleRewardDTO.class);
         return response.getBody();
     }
 

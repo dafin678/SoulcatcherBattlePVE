@@ -4,6 +4,7 @@ import id.ac.ui.cs.advprog.soulcatcherBattle.core.entities.Monster;
 import id.ac.ui.cs.advprog.soulcatcherBattle.core.entities.monsters.Razorbrute;
 import id.ac.ui.cs.advprog.soulcatcherBattle.core.entities.monsters.Rotflayer;
 import id.ac.ui.cs.advprog.soulcatcherBattle.core.entities.monsters.Webteeth;
+import id.ac.ui.cs.advprog.soulcatcherBattle.core.enums.EntityState;
 import id.ac.ui.cs.advprog.soulcatcherBattle.model.DTOs.AttackDTO;
 import id.ac.ui.cs.advprog.soulcatcherBattle.model.DTOs.BattleRewardDTO;
 import id.ac.ui.cs.advprog.soulcatcherBattle.model.DTOs.DamageDTO;
@@ -52,16 +53,24 @@ public class BattleServiceImpl implements BattleService{
     }
 
     @Override
-    public AttackDTO attack() {
-        BattlePersona battlePersona = new BattlePersona();
-        Monster monster = getMonster();
-        var personaDamageDTO = getDamageFromAttack(battlePersona.getAttack());
-        var monsterDamageDTO = getDamageFromAttack(monster.getAttack());
-        monster.refreshState();
-        monster.processDamage(personaDamageDTO);
-        battlePersona.refreshState();
-        battlePersona.processDamage(monsterDamageDTO);
-        return new AttackDTO(battlePersona.getAttack(),monster.getHealth(),monster.getState().toString(), monster.getId());
+    public AttackDTO attack(AttackDTO attackDTO) {
+//        BattlePersona battlePersona = new BattlePersona();
+//        Monster monster = getMonster();
+//        var personaDamageDTO = getDamageFromAttack(battlePersona.getAttack());
+//        var monsterDamageDTO = getDamageFromAttack(monster.getAttack());
+//        monster.refreshState();
+//        monster.processDamage(personaDamageDTO);
+//        battlePersona.refreshState();
+//        battlePersona.processDamage(monsterDamageDTO);
+        int damage = attackDTO.getDamage();
+        int health = attackDTO.getEnemyHealth();
+        int newHp = health-damage;
+        if (newHp <= 0) {
+            attackDTO.setEnemyState("dead");
+            newHp = 0;
+        }
+        attackDTO.setEnemyHealth(newHp);
+        return attackDTO;
     }
 
 

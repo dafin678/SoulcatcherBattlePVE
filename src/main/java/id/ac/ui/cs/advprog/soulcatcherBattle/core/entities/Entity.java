@@ -7,7 +7,10 @@ import lombok.Data;
 @Data
 public abstract class Entity {
     EntityState state;
+    String name;
     int health;
+    int damage;
+    String entityState;
 
 
     public abstract int getAttack();

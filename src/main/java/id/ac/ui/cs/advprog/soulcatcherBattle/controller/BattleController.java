@@ -33,8 +33,8 @@ public class BattleController {
     @RequestMapping(method = RequestMethod.POST, path = "/attack-monster", produces = {"application/json"})
     @CrossOrigin(origins = "http://localhost:5000")
     @ResponseBody
-    public ResponseEntity<AttackDTO> attack(@RequestBody Integer personaId) {
-        return ResponseEntity.ok(battleService.attack());
+    public ResponseEntity<AttackDTO> attack(@RequestBody AttackDTO attackDTO) {
+        return ResponseEntity.ok(battleService.attack(attackDTO));
     }
 
     @RequestMapping(method = RequestMethod.POST, path = "/win-battle", produces = {"application/json"})

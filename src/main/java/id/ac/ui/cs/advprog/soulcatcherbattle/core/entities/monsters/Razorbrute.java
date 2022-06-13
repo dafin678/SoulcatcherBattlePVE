@@ -1,20 +1,17 @@
-package id.ac.ui.cs.advprog.soulcatcherBattle.core.entities.monsters;
+package id.ac.ui.cs.advprog.soulcatcherbattle.core.entities.monsters;
 
-import id.ac.ui.cs.advprog.soulcatcherBattle.core.entities.MonsterAttacks;
+import id.ac.ui.cs.advprog.soulcatcherbattle.core.entities.MonsterAttacks;
 
 public class Razorbrute extends MonsterAttacks {
-
-    private static final String name = "Razorbrute";
 
     @Override
     protected Integer attackDamage() {
         return 9;
     }
 
-
     @Override
     protected String getName() {
-        return name;
+        return "Razorbrute";
     }
 
     @Override

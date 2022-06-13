@@ -1,8 +1,8 @@
-package id.ac.ui.cs.advprog.soulcatcherBattle.core.entities;
+package id.ac.ui.cs.advprog.soulcatcherbattle.core.entities;
 
-import id.ac.ui.cs.advprog.soulcatcherBattle.core.enums.EntityState;
-import id.ac.ui.cs.advprog.soulcatcherBattle.model.DTOs.DamageDTO;
-import id.ac.ui.cs.advprog.soulcatcherBattle.core.vo.Persona;
+import id.ac.ui.cs.advprog.soulcatcherbattle.core.enums.EntityState;
+import id.ac.ui.cs.advprog.soulcatcherbattle.model.dto.DamageDTO;
+import id.ac.ui.cs.advprog.soulcatcherbattle.core.vo.Persona;
 import lombok.Data;
 
 @Data

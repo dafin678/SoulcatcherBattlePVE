@@ -1,4 +1,4 @@
-package id.ac.ui.cs.advprog.soulcatcherBattle;
+package id.ac.ui.cs.advprog.soulcatcherbattle;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

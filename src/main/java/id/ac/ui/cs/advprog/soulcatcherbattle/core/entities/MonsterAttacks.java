@@ -1,4 +1,4 @@
-package id.ac.ui.cs.advprog.soulcatcherBattle.core.entities;
+package id.ac.ui.cs.advprog.soulcatcherbattle.core.entities;
 
 public abstract class MonsterAttacks {
 

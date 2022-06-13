@@ -1,4 +1,4 @@
-package id.ac.ui.cs.advprog.soulcatcherBattle.model.DTOs;
+package id.ac.ui.cs.advprog.soulcatcherbattle.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

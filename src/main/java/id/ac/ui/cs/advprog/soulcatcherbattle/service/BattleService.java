@@ -1,9 +1,9 @@
-package id.ac.ui.cs.advprog.soulcatcherBattle.service;
+package id.ac.ui.cs.advprog.soulcatcherbattle.service;
 
-import id.ac.ui.cs.advprog.soulcatcherBattle.core.entities.Monster;
-import id.ac.ui.cs.advprog.soulcatcherBattle.model.DTOs.AttackDTO;
-import id.ac.ui.cs.advprog.soulcatcherBattle.model.DTOs.BattleRewardDTO;
-import id.ac.ui.cs.advprog.soulcatcherBattle.model.DTOs.DamageDTO;
+import id.ac.ui.cs.advprog.soulcatcherbattle.core.entities.Monster;
+import id.ac.ui.cs.advprog.soulcatcherbattle.model.dto.AttackDTO;
+import id.ac.ui.cs.advprog.soulcatcherbattle.model.dto.BattleRewardDTO;
+import id.ac.ui.cs.advprog.soulcatcherbattle.model.dto.DamageDTO;
 
 import java.util.List;
 

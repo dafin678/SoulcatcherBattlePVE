@@ -1,5 +1,4 @@
 package id.ac.ui.cs.advprog.soulcatcherBattle.service;
-import id.ac.ui.cs.advprog.soulcatcherBattle.core.entities.BattlePersona;
 import id.ac.ui.cs.advprog.soulcatcherBattle.core.entities.Monster;
 import id.ac.ui.cs.advprog.soulcatcherBattle.core.entities.monsters.Razorbrute;
 import id.ac.ui.cs.advprog.soulcatcherBattle.core.entities.monsters.Rotflayer;
@@ -24,7 +23,7 @@ public class BattleServiceImpl implements BattleService{
 
     @Override
     public BattleRewardDTO assignWinReward(int personaId) {
-        ResponseEntity<BattleRewardDTO> fragmentResponse = restTemplate.postForEntity("http://HOME-SERVICE/update-fragment/3", new HttpEntity<>(personaId), BattleRewardDTO.class);
+        ResponseEntity<BattleRewardDTO> fragmentResponse = restTemplate.postForEntity("https://soulcatcher-b1.herokuapp.com/update-fragment/3", new HttpEntity<>(personaId), BattleRewardDTO.class);
 
         var random = new Random();
         Integer dropChance = random.nextInt(101);
@@ -33,11 +32,11 @@ public class BattleServiceImpl implements BattleService{
             Integer soulChance = random.nextInt(101);
 
             if(soulChance <= 30) {
-                ResponseEntity<BattleRewardDTO> soulResponse = restTemplate.postForEntity("http://HOME-SERVICE/assign-persona-soul", new HttpEntity<>(null, null), BattleRewardDTO.class);
+                ResponseEntity<BattleRewardDTO> soulResponse = restTemplate.postForEntity("https://soulcatcher-b1.herokuapp.com/assign-persona-soul", new HttpEntity<>(null, null), BattleRewardDTO.class);
                 return soulResponse.getBody();
 
             } else {
-                ResponseEntity<BattleRewardDTO> consumableResponse = restTemplate.postForEntity("http://HOME-SERVICE/assign-consumable", new HttpEntity<>(null, null), BattleRewardDTO.class);
+                ResponseEntity<BattleRewardDTO> consumableResponse = restTemplate.postForEntity("https://soulcatcher-b1.herokuapp.com/assign-consumable", new HttpEntity<>(null, null), BattleRewardDTO.class);
                 return consumableResponse.getBody();
             }
 
@@ -47,7 +46,7 @@ public class BattleServiceImpl implements BattleService{
 
     @Override
     public BattleRewardDTO assignLoseReward(int personaId) {
-        ResponseEntity<BattleRewardDTO> response = restTemplate.postForEntity("http://HOME-SERVICE/update-fragment/1", new HttpEntity<>(personaId), BattleRewardDTO.class);
+        ResponseEntity<BattleRewardDTO> response = restTemplate.postForEntity("https://soulcatcher-b1.herokuapp.com/update-fragment/1", new HttpEntity<>(personaId), BattleRewardDTO.class);
         return response.getBody();
     }
 
